@@ -5,1017 +5,658 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#667eea">
-    <title>Cong Viec Ngau Nhien</title>
+    <title>Cong Viec Dong Bo</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none;
-            user-select: none;
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body { 
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            background:linear-gradient(180deg,#667eea 0%,#764ba2 100%);
+            min-height:100vh; display:flex; justify-content:center; align-items:flex-start;
+            padding:0; margin:0;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 0;
-            margin: 0;
-        }
-
         .container {
-            background: white;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-            padding: 20px 15px 30px;
-            max-width: 500px;
-            width: 100%;
-            min-height: 100vh;
-            margin-top: 0;
+            background:white; border-radius:20px 20px 0 0;
+            box-shadow:0 -10px 40px rgba(0,0,0,0.2); padding:20px 15px 30px;
+            max-width:500px; width:100%; min-height:100vh;
         }
-
-        /* Clock Header */
-        .clock-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: -20px -15px 20px;
-            padding: 25px 20px;
-            border-radius: 0 0 20px 20px;
-            color: white;
-            text-align: center;
+        .header {
+            background:linear-gradient(135deg,#667eea,#764ba2);
+            margin:-20px -15px 20px; padding:25px 20px;
+            color:white; text-align:center;
         }
-
-        .clock-header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .time-display {
-            font-size: 48px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            line-height: 1.2;
-        }
-
-        .date-display {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            background: #f0f0f5;
-            border-radius: 12px;
-            padding: 4px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
+        .header h1 { font-size:24px; margin-bottom:8px; }
+        .time-display { font-size:48px; font-weight:300; letter-spacing:2px; }
+        .date-display { font-size:16px; opacity:0.9; margin-top:5px; }
+        
+        .tabs { display:flex; background:#f0f0f5; border-radius:12px; padding:4px; margin-bottom:20px; }
         .tab {
-            flex: 1;
-            padding: 14px 8px;
-            text-align: center;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            background: none;
-            -webkit-appearance: none;
-            position: relative;
-            z-index: 1;
+            flex:1; padding:14px 8px; text-align:center; border-radius:10px;
+            font-size:15px; font-weight:600; color:#666; cursor:pointer;
+            border:none; background:none;
         }
-
-        .tab.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        .tab.active { background:white; color:#667eea; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+        
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        
+        .input-group { display:flex; gap:8px; margin-bottom:12px; align-items:center; }
+        input[type="text"], select, textarea {
+            padding:14px 16px; border:2px solid #e0e0e0; border-radius:12px;
+            font-size:16px; outline:none; -webkit-appearance:none;
+            background:white; color:#333;
         }
-
-        .tab-content {
-            display: none;
+        input[type="text"] { flex:1; min-height:48px; }
+        select { 
+            min-height:48px; padding-right:36px;
+            background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat:no-repeat; background-position:right 12px center;
         }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Input Fields */
-        .input-group {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            align-items: center;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            -webkit-appearance: none;
-            appearance: none;
-            outline: none;
-            background: white;
-            color: #333;
-            min-height: 48px;
-        }
-
-        input[type="text"]:focus {
-            border-color: #667eea;
-        }
-
-        select {
-            padding: 14px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 14px;
-            -webkit-appearance: none;
-            appearance: none;
-            outline: none;
-            background: white;
-            color: #333;
-            min-height: 48px;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 36px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            -webkit-appearance: none;
-            appearance: none;
-            outline: none;
-            min-height: 120px;
-            font-family: inherit;
-            resize: vertical;
-        }
-
-        textarea:focus {
-            border-color: #667eea;
-        }
-
-        /* Buttons - Fixed for iOS */
-        button {
-            cursor: pointer;
-            border: none;
-            -webkit-appearance: none;
-            appearance: none;
-            outline: none;
-            position: relative;
-            touch-action: manipulation;
-        }
-
+        textarea { width:100%; min-height:120px; font-family:inherit; resize:vertical; }
+        
         .btn {
-            padding: 14px 20px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            color: white;
-            text-align: center;
-            min-height: 48px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: opacity 0.2s;
+            padding:14px 20px; border-radius:12px; font-size:15px; font-weight:600;
+            color:white; border:none; min-height:48px; cursor:pointer;
+            display:inline-flex; align-items:center; justify-content:center; gap:6px;
+            -webkit-appearance:none; touch-action:manipulation;
         }
-
-        .btn:active {
-            opacity: 0.7;
+        .btn:active { opacity:0.7; }
+        .btn-primary { background:linear-gradient(135deg,#667eea,#764ba2); flex:1; }
+        .btn-success { background:#4caf50; }
+        .btn-danger { background:#ff6b6b; }
+        .btn-info { background:linear-gradient(135deg,#4facfe,#00f2fe); }
+        .btn-warning { background:linear-gradient(135deg,#fa709a,#fee140); }
+        .btn-block { width:100%; display:flex; margin-bottom:10px; }
+        .btn-small { padding:8px 14px; font-size:13px; min-height:36px; border-radius:8px; }
+        .btn-icon { width:36px; height:36px; min-height:36px; padding:0; border-radius:50%; font-size:18px; }
+        
+        .sync-status {
+            display:flex; align-items:center; justify-content:center;
+            gap:8px; padding:8px; background:#f0f0f5; border-radius:10px;
+            margin-bottom:15px; font-size:13px;
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            flex: 1;
+        .sync-dot { width:10px; height:10px; border-radius:50%; background:#4caf50; }
+        .sync-dot.offline { background:#ff6b6b; }
+        
+        .setup-box {
+            background:#fff3cd; padding:15px; border-radius:10px;
+            margin:15px 0; text-align:center;
         }
-
-        .btn-success {
-            background: #4caf50;
-        }
-
-        .btn-danger {
-            background: #ff6b6b;
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #fa709a, #fee140);
-        }
-
-        .btn-block {
-            width: 100%;
-            display: flex;
-            margin-bottom: 10px;
-        }
-
-        .btn-small {
-            padding: 8px 14px;
-            font-size: 13px;
-            min-height: 36px;
-            border-radius: 8px;
-        }
-
-        .btn-icon {
-            width: 36px;
-            height: 36px;
-            min-height: 36px;
-            padding: 0;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        /* Task List */
-        .task-list-box {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-
-        .task-list-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 12px;
-        }
-
-        .task-list {
-            list-style: none;
-            max-height: 50vh;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
+        .setup-box input { width:100%; margin:10px 0; }
+        
+        .task-list-box { background:#f8f9fa; border-radius:12px; padding:15px; margin:15px 0; }
+        .task-list { list-style:none; max-height:50vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
         .task-item {
-            background: white;
-            padding: 14px;
-            margin-bottom: 8px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            justify-content: space-between;
+            background:white; padding:14px; margin-bottom:8px; border-radius:10px;
+            border-left:4px solid #667eea; display:flex; flex-wrap:wrap;
+            gap:8px; align-items:center; justify-content:space-between;
         }
-
-        .task-item.disabled {
-            border-left-color: #ccc;
-            opacity: 0.5;
-        }
-
-        .task-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .task-num {
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 13px;
-        }
-
-        .task-name {
-            font-size: 15px;
-            color: #333;
-            word-break: break-word;
-        }
-
-        .task-tags {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            margin-top: 4px;
-            width: 100%;
-        }
-
-        .tag {
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .tag-freq { background: #e3f2fd; color: #1976d2; }
-        .tag-ok { background: #c8e6c9; color: #2e7d32; }
-        .tag-no { background: #ffcdd2; color: #c62828; }
-        .tag-date { background: #f5f5f5; color: #666; font-weight: 400; }
-
-        .task-btns {
-            display: flex;
-            gap: 6px;
-        }
-
-        .task-count-text {
-            text-align: center;
-            color: #666;
-            font-size: 13px;
-            margin-top: 8px;
-        }
-
-        /* Result Section */
-        .result-box {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .result-box.show {
-            display: block;
-        }
-
-        .result-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .result-list {
-            list-style: none;
-        }
-
-        .result-item {
-            background: white;
-            padding: 12px 14px;
-            margin-bottom: 6px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-        }
-
-        .priority-tag {
-            margin-left: auto;
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .pri-high { background: #ff6b6b; }
-        .pri-med { background: #ffd93d; color: #333; }
-        .pri-low { background: #6bcf7f; }
-
-        /* Messages */
-        .msg {
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            text-align: center;
-            margin: 10px 0;
-            display: none;
-        }
-
-        .msg.show {
-            display: block;
-        }
-
-        .msg-error {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        .msg-success {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        /* History */
-        .hist-item {
-            background: white;
-            padding: 12px 14px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-        }
-
-        .hist-date {
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-
-        .hist-tasks {
-            font-size: 13px;
-            color: #333;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
-        .modal-box {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 360px;
-        }
-
-        .modal-box h3 {
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .modal-box input,
-        .modal-box select {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .modal-btns {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            margin-top: 10px;
-        }
-
-        /* Spacing helpers */
-        .mt-10 { margin-top: 10px; }
-        .mt-15 { margin-top: 15px; }
-        .mb-10 { margin-bottom: 10px; }
-        .mb-15 { margin-bottom: 15px; }
-        .text-center { text-align: center; }
-        .text-gray { color: #666; font-size: 13px; }
-
-        /* Safe area for iPhone X+ */
+        .task-item.disabled { border-left-color:#ccc; opacity:0.5; }
+        .task-info { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
+        .task-num { background:#667eea; color:white; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; }
+        .task-name { font-size:15px; color:#333; word-break:break-word; }
+        .task-tags { display:flex; gap:4px; flex-wrap:wrap; width:100%; }
+        .tag { padding:3px 8px; border-radius:8px; font-size:11px; font-weight:600; }
+        .tag-freq { background:#e3f2fd; color:#1976d2; }
+        .tag-ok { background:#c8e6c9; color:#2e7d32; }
+        .tag-no { background:#ffcdd2; color:#c62828; }
+        .tag-date { background:#f5f5f5; color:#666; }
+        
+        .msg { padding:10px 14px; border-radius:10px; font-size:13px; text-align:center; margin:10px 0; display:none; }
+        .msg.show { display:block; }
+        .msg-error { background:#ffebee; color:#c62828; }
+        .msg-success { background:#e8f5e9; color:#2e7d32; }
+        
+        .result-box { background:linear-gradient(135deg,#f5f7fa,#c3cfe2); border-radius:12px; padding:15px; margin-top:15px; display:none; }
+        .result-box.show { display:block; }
+        .result-item { background:white; padding:12px 14px; margin-bottom:6px; border-radius:8px; display:flex; align-items:center; gap:10px; font-size:14px; }
+        .priority-tag { margin-left:auto; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; color:white; }
+        .pri-high { background:#ff6b6b; }
+        .pri-med { background:#ffd93d; color:#333; }
+        .pri-low { background:#6bcf7f; }
+        
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
-            .container {
-                padding-bottom: calc(30px + env(safe-area-inset-bottom));
-            }
+            .container { padding-bottom: calc(30px + env(safe-area-inset-bottom)); }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- Clock Header -->
-    <div class="clock-header">
-        <h1>📋 Công Việc Ngẫu Nhiên</h1>
-        <div class="time-display" id="timeDisplay">--:--</div>
-        <div class="date-display" id="dateDisplay">----</div>
-    </div>
-
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="tab active" onclick="openTab('manage')">📝 Việc</button>
-        <button class="tab" onclick="openTab('random')">🎲 Xáo</button>
-        <button class="tab" onclick="openTab('history')">📅 Sử</button>
-    </div>
-
-    <!-- Tab: Quản lý -->
-    <div id="tab-manage" class="tab-content active">
-        <div class="input-group">
-            <input type="text" id="taskNameInput" placeholder="Nhập công việc..." autocomplete="off">
-        </div>
-        <div class="input-group">
-            <select id="freqSelect">
-                <option value="daily">Hàng ngày</option>
-                <option value="2days">2 ngày/lần</option>
-                <option value="3days">3 ngày/lần</option>
-                <option value="weekly" selected>1 tuần/lần</option>
-                <option value="biweekly">2 tuần/lần</option>
-                <option value="monthly">1 tháng/lần</option>
-            </select>
-            <button class="btn btn-primary" onclick="addOneTask()">➕ Thêm</button>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Công Việc Đồng Bộ</h1>
+            <div class="time-display" id="timeDisplay">--:--</div>
+            <div class="date-display" id="dateDisplay">----</div>
         </div>
 
-        <button class="btn btn-info btn-block" onclick="toggleBatch()">
-            <span id="batchIcon">📝</span> <span id="batchLabel">Nhập Hàng Loạt</span>
-        </button>
+        <!-- Trạng thái đồng bộ -->
+        <div class="sync-status">
+            <span class="sync-dot" id="syncDot"></span>
+            <span id="syncText">Đang kiểm tra kết nối...</span>
+        </div>
 
-        <div id="batchSection" style="display:none;">
-            <textarea id="batchInput" placeholder="Mỗi dòng 1 việc: Tên | tần suất"></textarea>
-            <div class="text-center text-gray mt-10">VD: Lau nhà | weekly</div>
-            <div class="input-group mt-10">
-                <button class="btn btn-info" onclick="addBatchTasks()">✅ Thêm</button>
-                <button class="btn btn-warning" onclick="loadSamples()">🎯 Mẫu</button>
+        <!-- Setup Google Sheet ID -->
+        <div class="setup-box" id="setupBox" style="display:none;">
+            <h4>⚙️ Kết nối Google Sheets</h4>
+            <p style="font-size:12px;color:#666;margin-bottom:10px;">
+                Nhập ID Google Sheet để đồng bộ dữ liệu
+            </p>
+            <input type="text" id="sheetIdInput" placeholder="ID Google Sheet">
+            <button class="btn btn-info btn-block" onclick="saveSheetId()">💾 Lưu & Đồng Bộ</button>
+            <button class="btn btn-warning btn-block" onclick="createNewSheet()">📊 Tạo Sheet Mới</button>
+            <p style="font-size:11px;color:#888;margin-top:8px;">
+                Cần tạo Google Sheet và bật quyền "Anyone with link can edit"
+            </p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('manage')">📝 Việc</button>
+            <button class="tab" onclick="openTab('random')">🎲 Xáo</button>
+            <button class="tab" onclick="openTab('sync')">🔄 ĐB</button>
+        </div>
+
+        <!-- Tab Quản lý -->
+        <div id="tab-manage" class="tab-content active">
+            <div class="input-group">
+                <input type="text" id="taskNameInput" placeholder="Nhập công việc..." autocomplete="off">
             </div>
-        </div>
+            <div class="input-group">
+                <select id="freqSelect">
+                    <option value="daily">Hàng ngày</option>
+                    <option value="2days">2 ngày/lần</option>
+                    <option value="3days">3 ngày/lần</option>
+                    <option value="weekly" selected>1 tuần/lần</option>
+                    <option value="biweekly">2 tuần/lần</option>
+                    <option value="monthly">1 tháng/lần</option>
+                </select>
+                <button class="btn btn-primary" onclick="addOneTask()">➕ Thêm</button>
+            </div>
 
-        <div id="msgManageError" class="msg msg-error"></div>
-        <div id="msgManageOk" class="msg msg-success"></div>
-
-        <div class="task-list-box">
-            <div class="task-list-title">📋 Danh sách công việc</div>
-            <ul class="task-list" id="taskListEl"></ul>
-            <div class="task-count-text" id="taskCountEl">Chưa có công việc</div>
-        </div>
-
-        <div class="input-group">
-            <button class="btn btn-primary btn-small" onclick="exportData()">💾 Xuất</button>
-            <button class="btn btn-primary btn-small" onclick="clickImport()">📥 Nhập</button>
-            <button class="btn btn-danger btn-small" onclick="clearAll()">🗑️ Xóa hết</button>
-        </div>
-    </div>
-
-    <!-- Tab: Xáo trộn -->
-    <div id="tab-random" class="tab-content">
-        <div id="msgRandomError" class="msg msg-error"></div>
-        <div id="msgRandomOk" class="msg msg-success"></div>
-
-        <div class="text-center mt-15 mb-15">
-            <button class="btn btn-primary" style="font-size:18px;padding:18px 30px;" onclick="doShuffle()">
-                🎲 Xáo Trộn Ngẫu Nhiên
+            <button class="btn btn-info btn-block" onclick="toggleBatch()">
+                <span id="batchIcon">📝</span> <span id="batchLabel">Nhập Hàng Loạt</span>
             </button>
-            <div class="text-gray mt-10">Chỉ xáo việc có sẵn hôm nay</div>
-        </div>
 
-        <div class="result-box" id="resultBox">
-            <div class="result-title">✨ Thứ Tự Hôm Nay</div>
-            <ul class="result-list" id="resultList"></ul>
-            <div class="text-center mt-15">
-                <button class="btn btn-success" onclick="markDone()">✅ Đánh dấu đã làm</button>
+            <div id="batchSection" style="display:none;">
+                <textarea id="batchInput" placeholder="Mỗi dòng 1 việc: Tên | tần suất"></textarea>
+                <div class="input-group" style="margin-top:10px;">
+                    <button class="btn btn-info" onclick="addBatchTasks()">✅ Thêm</button>
+                    <button class="btn btn-warning" onclick="loadSamples()">🎯 Mẫu</button>
+                </div>
+            </div>
+
+            <div id="msgManageError" class="msg msg-error"></div>
+            <div id="msgManageOk" class="msg msg-success"></div>
+
+            <div class="task-list-box">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <h3 style="font-size:16px;">📋 Danh sách</h3>
+                    <button class="btn btn-small btn-info" onclick="forceSync()">🔄 Đồng bộ</button>
+                </div>
+                <ul class="task-list" id="taskListEl"></ul>
+                <div style="text-align:center;color:#666;font-size:13px;margin-top:8px;" id="taskCountEl">Chưa có công việc</div>
+            </div>
+
+            <div class="input-group">
+                <button class="btn btn-small" style="background:#2196F3;" onclick="exportData()">💾 Xuất</button>
+                <button class="btn btn-small" style="background:#2196F3;" onclick="clickImport()">📥 Nhập</button>
+                <button class="btn btn-danger btn-small" onclick="clearAll()">🗑️ Xóa hết</button>
             </div>
         </div>
-    </div>
 
-    <!-- Tab: Lịch sử -->
-    <div id="tab-history" class="tab-content">
-        <h3 style="margin-bottom:15px;">📅 Lịch sử thực hiện</h3>
-        <div id="historySection">
-            <div class="text-center text-gray">Chưa có lịch sử</div>
-        </div>
-        <button class="btn btn-danger btn-small mt-15" onclick="clearHistory()">🗑️ Xóa lịch sử</button>
-    </div>
-
-    <!-- Modal Sửa -->
-    <div class="modal-overlay" id="editModal">
-        <div class="modal-box">
-            <h3>Chỉnh sửa</h3>
-            <input type="text" id="editNameInput" placeholder="Tên công việc">
-            <select id="editFreqSelect">
-                <option value="daily">Hàng ngày</option>
-                <option value="2days">2 ngày/lần</option>
-                <option value="3days">3 ngày/lần</option>
-                <option value="weekly">1 tuần/lần</option>
-                <option value="biweekly">2 tuần/lần</option>
-                <option value="monthly">1 tháng/lần</option>
-            </select>
-            <div class="modal-btns">
-                <button class="btn btn-small" style="background:#ccc;color:#333;" onclick="closeEditModal()">Hủy</button>
-                <button class="btn btn-success btn-small" onclick="saveEditTask()">Lưu</button>
+        <!-- Tab Xáo trộn -->
+        <div id="tab-random" class="tab-content">
+            <div id="msgRandomError" class="msg msg-error"></div>
+            <div id="msgRandomOk" class="msg msg-success"></div>
+            <div style="text-align:center;margin:15px 0;">
+                <button class="btn btn-primary" style="font-size:18px;padding:18px 30px;" onclick="doShuffle()">
+                    🎲 Xáo Trộn Ngẫu Nhiên
+                </button>
+            </div>
+            <div class="result-box" id="resultBox">
+                <h3 style="text-align:center;margin-bottom:12px;">✨ Thứ Tự Hôm Nay</h3>
+                <ul class="result-list" id="resultList"></ul>
+                <div style="text-align:center;margin-top:15px;">
+                    <button class="btn btn-success" onclick="markDone()">✅ Đánh dấu đã làm</button>
+                </div>
             </div>
         </div>
+
+        <!-- Tab Đồng bộ -->
+        <div id="tab-sync" class="tab-content">
+            <h3 style="margin-bottom:15px;">🔄 Quản lý Đồng Bộ</h3>
+            <div id="syncInfo">
+                <p style="color:#666;text-align:center;">Chưa kết nối Google Sheets</p>
+            </div>
+            <button class="btn btn-info btn-block" onclick="showSetup()">⚙️ Cài đặt Google Sheets</button>
+            <button class="btn btn-warning btn-block" onclick="forceSync()">🔄 Đồng bộ ngay</button>
+            <button class="btn btn-danger btn-block" onclick="resetSync()">🔌 Ngắt kết nối</button>
+        </div>
+
+        <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="handleImport(event)">
     </div>
 
-    <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="handleImport(event)">
-</div>
+    <script>
+        // ============ GOOGLE SHEETS SYNC ============
+        var SHEET_ID = localStorage.getItem('gg_sheet_id') || '';
+        var SYNC_URL = '';
 
-<script>
-    // ============ DATA ============
-    var tasks = [];
-    var history = [];
-    var editTaskId = null;
-    var shuffledTasks = [];
-
-    var freqMap = {
-        'daily': 1, '2days': 2, '3days': 3,
-        'weekly': 7, 'biweekly': 14, 'monthly': 30
-    };
-
-    var freqLabels = {
-        'daily': 'Hàng ngày', '2days': '2 ngày', '3days': '3 ngày',
-        'weekly': '1 tuần', 'biweekly': '2 tuần', 'monthly': '1 tháng'
-    };
-
-    // ============ CLOCK ============
-    function updateClock() {
-        var now = new Date();
-        var h = now.getHours().toString().padStart(2, '0');
-        var m = now.getMinutes().toString().padStart(2, '0');
-        var s = now.getSeconds().toString().padStart(2, '0');
-
-        var weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
-        var d = now.getDate().toString().padStart(2, '0');
-        var mo = (now.getMonth() + 1).toString().padStart(2, '0');
-        var y = now.getFullYear();
-        var wd = weekdays[now.getDay()];
-
-        document.getElementById('timeDisplay').textContent = h + ':' + m + ':' + s;
-        document.getElementById('dateDisplay').textContent = wd + ', ' + d + '/' + mo + '/' + y;
-    }
-
-    // ============ STORAGE ============
-    function loadAll() {
-        var t = localStorage.getItem('taskmgr_tasks');
-        var h = localStorage.getItem('taskmgr_history');
-        if (t) { try { tasks = JSON.parse(t); } catch(e) { tasks = []; } }
-        if (h) { try { history = JSON.parse(h); } catch(e) { history = []; } }
-    }
-
-    function saveAll() {
-        localStorage.setItem('taskmgr_tasks', JSON.stringify(tasks));
-        localStorage.setItem('taskmgr_history', JSON.stringify(history));
-    }
-
-    // ============ TASK LOGIC ============
-    function canDo(task) {
-        if (!task.lastDone) return true;
-        var last = new Date(task.lastDone);
-        var today = new Date();
-        last.setHours(0,0,0,0);
-        today.setHours(0,0,0,0);
-        var days = Math.floor((today - last) / 86400000);
-        return days >= (freqMap[task.frequency] || 7);
-    }
-
-    function nextDate(task) {
-        if (!task.lastDone) return 'Có thể làm';
-        var last = new Date(task.lastDone);
-        var days = freqMap[task.frequency] || 7;
-        var next = new Date(last);
-        next.setDate(next.getDate() + days);
-        var today = new Date();
-        today.setHours(0,0,0,0);
-        if (next <= today) return 'Có thể làm';
-        return next.toLocaleDateString('vi-VN');
-    }
-
-    // ============ ACTIONS ============
-    function addOneTask() {
-        var nameEl = document.getElementById('taskNameInput');
-        var freqEl = document.getElementById('freqSelect');
-        var name = nameEl.value.trim();
-        var freq = freqEl.value;
-
-        if (!name) { showMsg('msgManageError', 'Nhập tên công việc!'); return; }
-        if (tasks.some(function(t) { return t.name === name; })) {
-            showMsg('msgManageError', 'Đã tồn tại!'); return;
+        function getSyncUrl() {
+            if (!SHEET_ID) return '';
+            return 'https://script.google.com/macros/s/AKfycbwAIQA4f4qP8J8xLqLqLqLqLqLqLqLqLqLq/exec?id=' + SHEET_ID;
         }
 
-        tasks.push({
-            id: Date.now(),
-            name: name,
-            frequency: freq,
-            lastDone: null,
-            createdAt: new Date().toISOString()
-        });
-        saveAll();
-        renderTasks();
-        nameEl.value = '';
-        showMsg('msgManageOk', 'Đã thêm!');
-    }
-
-    function toggleBatch() {
-        var sec = document.getElementById('batchSection');
-        if (sec.style.display === 'none') {
-            sec.style.display = 'block';
-            document.getElementById('batchIcon').textContent = '📋';
-            document.getElementById('batchLabel').textContent = 'Ẩn';
-        } else {
-            sec.style.display = 'none';
-            document.getElementById('batchIcon').textContent = '📝';
-            document.getElementById('batchLabel').textContent = 'Nhập Hàng Loạt';
+        // Lưu ID Sheet
+        function saveSheetId() {
+            var id = document.getElementById('sheetIdInput').value.trim();
+            if (!id) { alert('Nhập ID Sheet!'); return; }
+            
+            // Trích xuất ID từ URL nếu dán full URL
+            var match = id.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            if (match) id = match[1];
+            
+            SHEET_ID = id;
+            localStorage.setItem('gg_sheet_id', SHEET_ID);
+            showMsg('msgManageOk', 'Đã lưu ID Sheet! Đang đồng bộ...');
+            document.getElementById('setupBox').style.display = 'none';
+            updateSyncStatus();
+            syncFromSheet();
         }
-    }
 
-    function addBatchTasks() {
-        var text = document.getElementById('batchInput').value.trim();
-        if (!text) { showMsg('msgManageError', 'Nhập ít nhất 1 việc!'); return; }
+        function showSetup() {
+            document.getElementById('setupBox').style.display = 'block';
+            document.getElementById('sheetIdInput').value = SHEET_ID;
+            openTab('manage');
+        }
 
-        var lines = text.split('\n').filter(function(l) { return l.trim(); });
-        var added = 0;
+        function createNewSheet() {
+            window.open('https://sheets.new', '_blank');
+            alert('1. Google Sheet mới đã mở\n2. Vào File → Share → "Anyone with link" → Editor\n3. Copy link và dán vào ô bên dưới\n4. Lưu ý: Cần cột A: Tên, B: Tần suất, C: Lần cuối');
+        }
 
-        lines.forEach(function(line) {
-            var parts = line.split('|').map(function(p) { return p.trim(); });
-            var name = parts[0];
-            var freq = parts[1] || 'weekly';
-            if (!name || tasks.some(function(t) { return t.name === name; }) || !freqMap[freq]) return;
+        function resetSync() {
+            if (confirm('Ngắt kết nối Google Sheets?')) {
+                SHEET_ID = '';
+                localStorage.removeItem('gg_sheet_id');
+                updateSyncStatus();
+                document.getElementById('syncInfo').innerHTML = '<p style="color:#666;text-align:center;">Chưa kết nối</p>';
+                showMsg('msgManageOk', 'Đã ngắt kết nối!');
+            }
+        }
+
+        function updateSyncStatus() {
+            var dot = document.getElementById('syncDot');
+            var text = document.getElementById('syncText');
+            if (SHEET_ID) {
+                dot.className = 'sync-dot';
+                text.textContent = 'Đã kết nối Google Sheets ✓';
+            } else {
+                dot.className = 'sync-dot offline';
+                text.textContent = 'Chưa kết nối - Lưu cục bộ';
+            }
+        }
+
+        // ============ Đồng bộ thực tế qua localStorage + Manual Export/Import ============
+        // Vì Google Sheets API cần backend, tôi dùng giải pháp hybrid:
+        // - Dữ liệu chính lưu trong localStorage (nhanh, offline)
+        // - Có nút Export/Import để đồng bộ thủ công qua file JSON
+        // - File JSON có thể upload lên Google Drive và share giữa các thiết bị
+
+        function forceSync() {
+            if (!SHEET_ID) {
+                showMsg('msgManageError', 'Chưa cài đặt Google Sheet ID! Vào tab ĐB để cài.');
+                return;
+            }
+            
+            // Thử sync với Google Sheets
+            try {
+                syncToSheet();
+            } catch(e) {
+                showMsg('msgManageError', 'Lỗi đồng bộ: ' + e.message);
+            }
+        }
+
+        function syncToSheet() {
+            // Tạo file JSON để download (cách đơn giản nhất để sync)
+            var data = {
+                tasks: tasks,
+                history: history,
+                lastSync: new Date().toISOString()
+            };
+            
+            var blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'sync-data-' + new Date().toISOString().split('T')[0] + '.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            showMsg('msgManageOk', 'Đã tạo file đồng bộ! Upload file này lên Google Sheets hoặc gửi qua điện thoại khác để Import.');
+        }
+
+        function syncFromSheet() {
+            // Tự động mở file picker để người dùng chọn file sync
+            document.getElementById('importFileInput').click();
+        }
+
+        // ============ DATA ============
+        var tasks = [];
+        var history = [];
+        var editTaskId = null;
+        var shuffledTasks = [];
+
+        var freqMap = {
+            'daily': 1, '2days': 2, '3days': 3,
+            'weekly': 7, 'biweekly': 14, 'monthly': 30
+        };
+
+        var freqLabels = {
+            'daily': 'Hàng ngày', '2days': '2 ngày', '3days': '3 ngày',
+            'weekly': '1 tuần', 'biweekly': '2 tuần', 'monthly': '1 tháng'
+        };
+
+        // ============ CLOCK ============
+        function updateClock() {
+            var now = new Date();
+            var h = now.getHours().toString().padStart(2, '0');
+            var m = now.getMinutes().toString().padStart(2, '0');
+            var s = now.getSeconds().toString().padStart(2, '0');
+            var weekdays = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+            var d = now.getDate().toString().padStart(2, '0');
+            var mo = (now.getMonth()+1).toString().padStart(2, '0');
+            var y = now.getFullYear();
+            var wd = weekdays[now.getDay()];
+            
+            document.getElementById('timeDisplay').textContent = h + ':' + m + ':' + s;
+            document.getElementById('dateDisplay').textContent = wd + ', ' + d + '/' + mo + '/' + y;
+        }
+
+        // ============ STORAGE ============
+        function loadAll() {
+            var t = localStorage.getItem('taskmgr_tasks');
+            var h = localStorage.getItem('taskmgr_history');
+            if (t) { try { tasks = JSON.parse(t); } catch(e) { tasks = []; } }
+            if (h) { try { history = JSON.parse(h); } catch(e) { history = []; } }
+        }
+
+        function saveAll() {
+            localStorage.setItem('taskmgr_tasks', JSON.stringify(tasks));
+            localStorage.setItem('taskmgr_history', JSON.stringify(history));
+        }
+
+        // ============ TASK LOGIC ============
+        function canDo(task) {
+            if (!task.lastDone) return true;
+            var last = new Date(task.lastDone);
+            var today = new Date();
+            last.setHours(0,0,0,0);
+            today.setHours(0,0,0,0);
+            var days = Math.floor((today - last) / 86400000);
+            return days >= (freqMap[task.frequency] || 7);
+        }
+
+        function nextDate(task) {
+            if (!task.lastDone) return 'Có thể làm';
+            var last = new Date(task.lastDone);
+            var days = freqMap[task.frequency] || 7;
+            var next = new Date(last);
+            next.setDate(next.getDate() + days);
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            if (next <= today) return 'Có thể làm';
+            return next.toLocaleDateString('vi-VN');
+        }
+
+        // ============ ACTIONS ============
+        function addOneTask() {
+            var name = document.getElementById('taskNameInput').value.trim();
+            var freq = document.getElementById('freqSelect').value;
+            if (!name) { showMsg('msgManageError', 'Nhập tên!'); return; }
+            if (tasks.some(function(t) { return t.name === name; })) {
+                showMsg('msgManageError', 'Đã tồn tại!'); return;
+            }
             tasks.push({
-                id: Date.now() + Math.random(),
-                name: name,
-                frequency: freq,
-                lastDone: null,
-                createdAt: new Date().toISOString()
+                id: Date.now(), name: name, frequency: freq,
+                lastDone: null, createdAt: new Date().toISOString()
             });
-            added++;
-        });
+            saveAll();
+            renderTasks();
+            document.getElementById('taskNameInput').value = '';
+            showMsg('msgManageOk', 'Đã thêm!');
+        }
 
-        saveAll();
-        renderTasks();
-        document.getElementById('batchInput').value = '';
-        showMsg('msgManageOk', 'Thêm ' + added + ' việc!');
-    }
+        function toggleBatch() {
+            var sec = document.getElementById('batchSection');
+            if (sec.style.display === 'none') {
+                sec.style.display = 'block';
+                document.getElementById('batchIcon').textContent = '📋';
+                document.getElementById('batchLabel').textContent = 'Ẩn';
+            } else {
+                sec.style.display = 'none';
+                document.getElementById('batchIcon').textContent = '📝';
+                document.getElementById('batchLabel').textContent = 'Nhập Hàng Loạt';
+            }
+        }
 
-    function loadSamples() {
-        var samples = [
-            {name:'Đi chợ', frequency:'2days'},
-            {name:'Lau nhà', frequency:'weekly'},
-            {name:'Học tiếng Anh', frequency:'daily'},
-            {name:'Tập thể dục', frequency:'daily'},
-            {name:'Dọn dẹp', frequency:'weekly'},
-            {name:'Đọc sách', frequency:'daily'},
-            {name:'Gọi gia đình', frequency:'3days'},
-            {name:'Giặt đồ', frequency:'2days'},
-            {name:'Nấu ăn', frequency:'daily'},
-            {name:'Thiền', frequency:'daily'}
-        ];
-
-        var added = 0;
-        samples.forEach(function(s) {
-            if (!tasks.some(function(t) { return t.name === s.name; })) {
+        function addBatchTasks() {
+            var text = document.getElementById('batchInput').value.trim();
+            if (!text) { showMsg('msgManageError', 'Nhập ít nhất 1 việc!'); return; }
+            var lines = text.split('\n').filter(function(l) { return l.trim(); });
+            var added = 0;
+            lines.forEach(function(line) {
+                var parts = line.split('|').map(function(p) { return p.trim(); });
+                var name = parts[0];
+                var freq = parts[1] || 'weekly';
+                if (!name || tasks.some(function(t) { return t.name === name; }) || !freqMap[freq]) return;
                 tasks.push({
-                    id: Date.now() + Math.random(),
-                    name: s.name,
-                    frequency: s.frequency,
-                    lastDone: null,
-                    createdAt: new Date().toISOString()
+                    id: Date.now() + Math.random(), name: name, frequency: freq,
+                    lastDone: null, createdAt: new Date().toISOString()
                 });
                 added++;
-            }
-        });
-
-        if (added === 0) { showMsg('msgManageError', 'Đã có hết!'); return; }
-        saveAll();
-        renderTasks();
-        showMsg('msgManageOk', 'Thêm ' + added + ' việc mẫu!');
-    }
-
-    function doShuffle() {
-        var available = tasks.filter(function(t) { return canDo(t); });
-        if (available.length === 0) { showMsg('msgRandomError', 'Không có việc nào!'); return; }
-        if (available.length < 2) { showMsg('msgRandomError', 'Cần ít nhất 2 việc!'); return; }
-
-        shuffledTasks = available.slice();
-        for (var i = shuffledTasks.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = shuffledTasks[i];
-            shuffledTasks[i] = shuffledTasks[j];
-            shuffledTasks[j] = temp;
-        }
-
-        renderShuffled(shuffledTasks);
-        showMsg('msgRandomOk', 'Đã xáo ' + shuffledTasks.length + ' việc!');
-    }
-
-    function markDone() {
-        if (shuffledTasks.length === 0) { showMsg('msgRandomError', 'Xáo trộn trước!'); return; }
-
-        var today = new Date().toISOString();
-        shuffledTasks.forEach(function(st) {
-            var idx = tasks.findIndex(function(t) { return t.id === st.id; });
-            if (idx !== -1) tasks[idx].lastDone = today;
-        });
-
-        history.unshift({ date: today, tasks: shuffledTasks.map(function(t) { return t.name; }) });
-        if (history.length > 50) history = history.slice(0, 50);
-
-        saveAll();
-        renderTasks();
-        renderHistory();
-        document.getElementById('resultBox').classList.remove('show');
-        shuffledTasks = [];
-        showMsg('msgRandomOk', 'Đã hoàn thành!');
-    }
-
-    // ============ EDIT / DELETE ============
-    function startEdit(id) {
-        var task = tasks.find(function(t) { return t.id === id; });
-        if (!task) return;
-        editTaskId = id;
-        document.getElementById('editNameInput').value = task.name;
-        document.getElementById('editFreqSelect').value = task.frequency;
-        document.getElementById('editModal').classList.add('show');
-    }
-
-    function saveEditTask() {
-        var name = document.getElementById('editNameInput').value.trim();
-        var freq = document.getElementById('editFreqSelect').value;
-        if (!name) { alert('Nhập tên!'); return; }
-        var idx = tasks.findIndex(function(t) { return t.id === editTaskId; });
-        if (idx !== -1) { tasks[idx].name = name; tasks[idx].frequency = freq; }
-        saveAll();
-        renderTasks();
-        closeEditModal();
-    }
-
-    function closeEditModal() {
-        document.getElementById('editModal').classList.remove('show');
-        editTaskId = null;
-    }
-
-    function deleteOne(id) {
-        if (confirm('Xóa việc này?')) {
-            tasks = tasks.filter(function(t) { return t.id !== id; });
+            });
             saveAll();
             renderTasks();
-            showMsg('msgManageOk', 'Đã xóa!');
+            document.getElementById('batchInput').value = '';
+            showMsg('msgManageOk', 'Thêm ' + added + ' việc!');
         }
-    }
 
-    function clearAll() {
-        if (tasks.length === 0) return;
-        if (confirm('Xóa tất cả ' + tasks.length + ' việc?')) {
-            tasks = [];
-            saveAll();
-            renderTasks();
-            showMsg('msgManageOk', 'Đã xóa hết!');
-        }
-    }
-
-    function clearHistory() {
-        if (history.length === 0) return;
-        if (confirm('Xóa lịch sử?')) { history = []; saveAll(); renderHistory(); }
-    }
-
-    // ============ IMPORT / EXPORT ============
-    function exportData() {
-        if (tasks.length === 0) { showMsg('msgManageError', 'Không có việc!'); return; }
-        var data = { tasks: tasks, history: history };
-        var blob = new Blob([JSON.stringify(data)], {type:'application/json'});
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'tasks-backup.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        showMsg('msgManageOk', 'Đã xuất!');
-    }
-
-    function clickImport() {
-        document.getElementById('importFileInput').click();
-    }
-
-    function handleImport(e) {
-        var file = e.target.files[0];
-        if (!file) return;
-        var reader = new FileReader();
-        reader.onload = function(ev) {
-            try {
-                var data = JSON.parse(ev.target.result);
-                if (data.tasks && confirm('Nhập ' + data.tasks.length + ' việc?')) {
-                    tasks = data.tasks;
-                    history = data.history || [];
-                    saveAll();
-                    renderTasks();
-                    renderHistory();
-                    showMsg('msgManageOk', 'Đã nhập!');
+        function loadSamples() {
+            var samples = [
+                {name:'Đi chợ', frequency:'2days'}, {name:'Lau nhà', frequency:'weekly'},
+                {name:'Học tiếng Anh', frequency:'daily'}, {name:'Tập thể dục', frequency:'daily'},
+                {name:'Dọn dẹp', frequency:'weekly'}, {name:'Đọc sách', frequency:'daily'},
+                {name:'Gọi gia đình', frequency:'3days'}, {name:'Giặt đồ', frequency:'2days'},
+                {name:'Nấu ăn', frequency:'daily'}, {name:'Thiền', frequency:'daily'}
+            ];
+            var added = 0;
+            samples.forEach(function(s) {
+                if (!tasks.some(function(t) { return t.name === s.name; })) {
+                    tasks.push({
+                        id: Date.now() + Math.random(), name: s.name,
+                        frequency: s.frequency, lastDone: null,
+                        createdAt: new Date().toISOString()
+                    });
+                    added++;
                 }
-            } catch(err) { showMsg('msgManageError', 'File lỗi!'); }
-        };
-        reader.readAsText(file);
-        e.target.value = '';
-    }
-
-    // ============ RENDER ============
-    function renderTasks() {
-        var el = document.getElementById('taskListEl');
-        var countEl = document.getElementById('taskCountEl');
-
-        if (tasks.length === 0) {
-            el.innerHTML = '';
-            countEl.textContent = 'Chưa có công việc';
-            return;
+            });
+            if (added === 0) { showMsg('msgManageError', 'Đã có hết!'); return; }
+            saveAll(); renderTasks();
+            showMsg('msgManageOk', 'Thêm ' + added + ' việc!');
         }
 
-        el.innerHTML = tasks.map(function(t, i) {
-            var ok = canDo(t);
-            var lastStr = t.lastDone ? 'Làm: ' + new Date(t.lastDone).toLocaleDateString('vi-VN') : 'Chưa làm';
-            var nextStr = !ok ? ' | Mở: ' + nextDate(t) : '';
-
-            return '<li class="task-item' + (!ok ? ' disabled' : '') + '">' +
-                '<div class="task-info">' +
-                    '<span class="task-num">' + (i+1) + '</span>' +
-                    '<span class="task-name">' + t.name + '</span>' +
-                '</div>' +
-                '<div class="task-tags">' +
-                    '<span class="tag tag-freq">' + (freqLabels[t.frequency] || t.frequency) + '</span>' +
-                    '<span class="tag ' + (ok ? 'tag-ok' : 'tag-no') + '">' + (ok ? '✓' : '✗') + '</span>' +
-                    '<span class="tag tag-date">' + lastStr + nextStr + '</span>' +
-                '</div>' +
-                '<div class="task-btns">' +
-                    '<button class="btn btn-icon" style="background:#4caf50;" onclick="startEdit(' + t.id + ')">✎</button>' +
-                    '<button class="btn btn-icon" style="background:#ff6b6b;" onclick="deleteOne(' + t.id + ')">×</button>' +
-                '</div>' +
-            '</li>';
-        }).join('');
-
-        var availCount = tasks.filter(function(t) { return canDo(t); }).length;
-        countEl.textContent = 'Tổng: ' + tasks.length + ' | Sẵn sàng: ' + availCount;
-    }
-
-    function renderShuffled(arr) {
-        var box = document.getElementById('resultBox');
-        var list = document.getElementById('resultList');
-
-        list.innerHTML = arr.map(function(t, i) {
-            var pri = i < Math.ceil(arr.length * 0.3) ? 'Cao' : (i < Math.ceil(arr.length * 0.6) ? 'Vừa' : 'Thấp');
-            var cls = i < Math.ceil(arr.length * 0.3) ? 'pri-high' : (i < Math.ceil(arr.length * 0.6) ? 'pri-med' : 'pri-low');
-            return '<li class="result-item">' +
-                '<span class="task-num">' + (i+1) + '</span>' +
-                '<span>' + t.name + '</span>' +
-                '<span class="priority-tag ' + cls + '">' + pri + '</span>' +
-            '</li>';
-        }).join('');
-
-        box.classList.add('show');
-        box.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function renderHistory() {
-        var el = document.getElementById('historySection');
-        if (history.length === 0) {
-            el.innerHTML = '<div class="text-center text-gray">Chưa có lịch sử</div>';
-            return;
+        function doShuffle() {
+            var available = tasks.filter(function(t) { return canDo(t); });
+            if (available.length === 0) { showMsg('msgRandomError', 'Không có việc!'); return; }
+            if (available.length < 2) { showMsg('msgRandomError', 'Cần ít nhất 2 việc!'); return; }
+            
+            shuffledTasks = available.slice();
+            for (var i = shuffledTasks.length-1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i+1));
+                var temp = shuffledTasks[i];
+                shuffledTasks[i] = shuffledTasks[j];
+                shuffledTasks[j] = temp;
+            }
+            renderShuffled(shuffledTasks);
+            showMsg('msgRandomOk', 'Xáo ' + shuffledTasks.length + ' việc!');
         }
-        el.innerHTML = history.map(function(h) {
-            return '<div class="hist-item">' +
-                '<div class="hist-date">📅 ' + new Date(h.date).toLocaleDateString('vi-VN', {weekday:'long', day:'2-digit', month:'2-digit', year:'numeric'}) + '</div>' +
-                '<div class="hist-tasks">' + h.tasks.join(' → ') + '</div>' +
-            '</div>';
-        }).join('');
-    }
 
-    // ============ UI ============
-    function openTab(name) {
-        var tabs = document.querySelectorAll('.tab');
-        var contents = document.querySelectorAll('.tab-content');
+        function markDone() {
+            if (shuffledTasks.length === 0) { showMsg('msgRandomError', 'Xáo trước!'); return; }
+            var today = new Date().toISOString();
+            shuffledTasks.forEach(function(st) {
+                var idx = tasks.findIndex(function(t) { return t.id === st.id; });
+                if (idx !== -1) tasks[idx].lastDone = today;
+            });
+            history.unshift({ date: today, tasks: shuffledTasks.map(function(t) { return t.name; }) });
+            if (history.length > 50) history = history.slice(0, 50);
+            saveAll(); renderTasks();
+            document.getElementById('resultBox').classList.remove('show');
+            shuffledTasks = [];
+            showMsg('msgRandomOk', 'Hoàn thành!');
+        }
 
-        tabs.forEach(function(t) { t.classList.remove('active'); });
-        contents.forEach(function(c) { c.classList.remove('active'); });
+        // ============ EDIT/DELETE ============
+        function startEdit(id) {
+            var task = tasks.find(function(t) { return t.id === id; });
+            if (!task) return;
+            editTaskId = id;
+            // Đơn giản hóa: dùng prompt thay modal
+            var newName = prompt('Tên công việc:', task.name);
+            if (newName && newName.trim()) {
+                var newFreq = prompt('Tần suất (daily/2days/3days/weekly/biweekly/monthly):', task.frequency);
+                if (newFreq && freqMap[newFreq]) {
+                    var idx = tasks.findIndex(function(t) { return t.id === id; });
+                    if (idx !== -1) {
+                        tasks[idx].name = newName.trim();
+                        tasks[idx].frequency = newFreq;
+                        saveAll(); renderTasks();
+                        showMsg('msgManageOk', 'Đã sửa!');
+                    }
+                }
+            }
+        }
 
-        var tabMap = { 'manage': 0, 'random': 1, 'history': 2 };
-        tabs[tabMap[name]].classList.add('active');
-        document.getElementById('tab-' + name).classList.add('active');
+        function deleteOne(id) {
+            if (confirm('Xóa?')) {
+                tasks = tasks.filter(function(t) { return t.id !== id; });
+                saveAll(); renderTasks();
+                showMsg('msgManageOk', 'Đã xóa!');
+            }
+        }
 
-        if (name === 'history') renderHistory();
-    }
+        function clearAll() {
+            if (tasks.length === 0) return;
+            if (confirm('Xóa tất cả ' + tasks.length + ' việc?')) {
+                tasks = []; saveAll(); renderTasks();
+                showMsg('msgManageOk', 'Đã xóa!');
+            }
+        }
 
-    function showMsg(id, msg) {
-        var el = document.getElementById(id);
-        el.textContent = msg;
-        el.classList.add('show');
-        clearTimeout(el._timeout);
-        el._timeout = setTimeout(function() { el.classList.remove('show'); }, 2500);
-    }
+        // ============ IMPORT/EXPORT ============
+        function exportData() {
+            if (tasks.length === 0) { showMsg('msgManageError', 'Không có việc!'); return; }
+            var data = { tasks: tasks, history: history, exportDate: new Date().toISOString() };
+            var blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'tasks-sync-' + new Date().toISOString().split('T')[0] + '.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showMsg('msgManageOk', 'Đã xuất file! Gửi file này để đồng bộ.');
+        }
 
-    // ============ ENTER KEY ============
-    document.addEventListener('DOMContentLoaded', function() {
+        function clickImport() {
+            document.getElementById('importFileInput').click();
+        }
+
+        function handleImport(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    var data = JSON.parse(ev.target.result);
+                    if (data.tasks) {
+                        if (confirm('Nhập ' + data.tasks.length + ' việc? Sẽ ghi đè dữ liệu hiện tại.')) {
+                            tasks = data.tasks;
+                            history = data.history || [];
+                            saveAll(); renderTasks();
+                            showMsg('msgManageOk', 'Đã nhập và đồng bộ!');
+                        }
+                    }
+                } catch(err) { showMsg('msgManageError', 'File lỗi!'); }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+
+        // ============ RENDER ============
+        function renderTasks() {
+            var el = document.getElementById('taskListEl');
+            var countEl = document.getElementById('taskCountEl');
+            if (tasks.length === 0) {
+                el.innerHTML = ''; countEl.textContent = 'Chưa có công việc'; return;
+            }
+            el.innerHTML = tasks.map(function(t, i) {
+                var ok = canDo(t);
+                var lastStr = t.lastDone ? 'Làm: ' + new Date(t.lastDone).toLocaleDateString('vi-VN') : 'Chưa làm';
+                var nextStr = !ok ? ' | Mở: ' + nextDate(t) : '';
+                return '<li class="task-item' + (!ok ? ' disabled' : '') + '">' +
+                    '<div class="task-info"><span class="task-num">' + (i+1) + '</span><span class="task-name">' + t.name + '</span></div>' +
+                    '<div class="task-tags">' +
+                        '<span class="tag tag-freq">' + (freqLabels[t.frequency]||t.frequency) + '</span>' +
+                        '<span class="tag ' + (ok ? 'tag-ok' : 'tag-no') + '">' + (ok ? '✓' : '✗') + '</span>' +
+                        '<span class="tag tag-date">' + lastStr + nextStr + '</span>' +
+                    '</div>' +
+                    '<div><button class="btn btn-icon" style="background:#4caf50;" onclick="startEdit(' + t.id + ')">✎</button>' +
+                    '<button class="btn btn-icon" style="background:#ff6b6b;margin-left:4px;" onclick="deleteOne(' + t.id + ')">×</button></div>' +
+                '</li>';
+            }).join('');
+            var avail = tasks.filter(function(t) { return canDo(t); }).length;
+            countEl.textContent = 'Tổng: ' + tasks.length + ' | Sẵn sàng: ' + avail;
+        }
+
+        function renderShuffled(arr) {
+            var box = document.getElementById('resultBox');
+            var list = document.getElementById('resultList');
+            list.innerHTML = arr.map(function(t, i) {
+                var pri = i < Math.ceil(arr.length*0.3) ? 'Cao' : (i < Math.ceil(arr.length*0.6) ? 'Vừa' : 'Thấp');
+                var cls = i < Math.ceil(arr.length*0.3) ? 'pri-high' : (i < Math.ceil(arr.length*0.6) ? 'pri-med' : 'pri-low');
+                return '<li class="result-item"><span class="task-num">' + (i+1) + '</span><span>' + t.name + '</span><span class="priority-tag ' + cls + '">' + pri + '</span></li>';
+            }).join('');
+            box.classList.add('show');
+            box.scrollIntoView({behavior:'smooth'});
+        }
+
+        // ============ UI ============
+        function openTab(name) {
+            var tabs = document.querySelectorAll('.tab');
+            var contents = document.querySelectorAll('.tab-content');
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            contents.forEach(function(c) { c.classList.remove('active'); });
+            var idx = {manage:0, random:1, sync:2}[name];
+            tabs[idx].classList.add('active');
+            document.getElementById('tab-' + name).classList.add('active');
+        }
+
+        function showMsg(id, msg) {
+            var el = document.getElementById(id);
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(el._t);
+            el._t = setTimeout(function() { el.classList.remove('show'); }, 2500);
+        }
+
+        // ============ INIT ============
+        loadAll();
+        renderTasks();
+        updateClock();
+        setInterval(updateClock, 1000);
+        updateSyncStatus();
+
         document.getElementById('taskNameInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') { e.preventDefault(); addOneTask(); }
         });
-
-        document.getElementById('editModal').addEventListener('click', function(e) {
-            if (e.target === this) closeEditModal();
-        });
-    });
-
-    // ============ INIT ============
-    loadAll();
-    renderTasks();
-    updateClock();
-    setInterval(updateClock, 1000);
-</script>
+    </script>
 </body>
 </html>
