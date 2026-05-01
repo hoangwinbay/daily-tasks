@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>Cong Viec Dong Bo</title>
+    <meta name="theme-color" content="#667eea">
+    <title>Cong Viec Ngau Nhien</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
         body { 
             font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
             background:linear-gradient(180deg,#667eea 0%,#764ba2 100%);
@@ -22,97 +23,116 @@
         .header {
             background:linear-gradient(135deg,#667eea,#764ba2);
             margin:-20px -15px 20px; padding:25px 20px;
-            color:white; text-align:center;
+            color:white; text-align:center; border-radius:0 0 20px 20px;
         }
-        .header h1 { font-size:24px; margin-bottom:8px; }
-        .time-display { font-size:48px; font-weight:300; letter-spacing:2px; }
-        .date-display { font-size:16px; opacity:0.9; margin-top:5px; }
+        .header h1 { font-size:22px; margin-bottom:8px; }
+        .time-display { font-size:44px; font-weight:300; letter-spacing:2px; }
+        .date-display { font-size:15px; opacity:0.9; margin-top:5px; }
         
         .tabs { display:flex; background:#f0f0f5; border-radius:12px; padding:4px; margin-bottom:20px; }
         .tab {
             flex:1; padding:14px 8px; text-align:center; border-radius:10px;
             font-size:15px; font-weight:600; color:#666; cursor:pointer;
-            border:none; background:none;
+            border:none; background:none; -webkit-appearance:none; touch-action:manipulation;
         }
         .tab.active { background:white; color:#667eea; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
         
         .tab-content { display:none; }
         .tab-content.active { display:block; }
         
-        .input-group { display:flex; gap:8px; margin-bottom:12px; align-items:center; }
+        .input-group { display:flex; gap:8px; margin-bottom:12px; align-items:center; flex-wrap:wrap; }
         input[type="text"], select, textarea {
             padding:14px 16px; border:2px solid #e0e0e0; border-radius:12px;
             font-size:16px; outline:none; -webkit-appearance:none;
             background:white; color:#333;
         }
-        input[type="text"] { flex:1; min-height:48px; }
-        select { 
-            min-height:48px; padding-right:36px;
-            background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2'/%3E%3C/svg%3E");
-            background-repeat:no-repeat; background-position:right 12px center;
-        }
-        textarea { width:100%; min-height:120px; font-family:inherit; resize:vertical; }
+        input[type="text"] { flex:1; min-height:48px; min-width:120px; }
+        select { min-height:48px; padding-right:32px; }
+        textarea { width:100%; min-height:100px; font-family:inherit; resize:vertical; }
         
         .btn {
-            padding:14px 20px; border-radius:12px; font-size:15px; font-weight:600;
+            padding:14px 18px; border-radius:12px; font-size:14px; font-weight:600;
             color:white; border:none; min-height:48px; cursor:pointer;
-            display:inline-flex; align-items:center; justify-content:center; gap:6px;
+            display:inline-flex; align-items:center; justify-content:center; gap:5px;
             -webkit-appearance:none; touch-action:manipulation;
         }
         .btn:active { opacity:0.7; }
-        .btn-primary { background:linear-gradient(135deg,#667eea,#764ba2); flex:1; }
+        .btn-primary { background:linear-gradient(135deg,#667eea,#764ba2); }
         .btn-success { background:#4caf50; }
         .btn-danger { background:#ff6b6b; }
         .btn-info { background:linear-gradient(135deg,#4facfe,#00f2fe); }
         .btn-warning { background:linear-gradient(135deg,#fa709a,#fee140); }
         .btn-block { width:100%; display:flex; margin-bottom:10px; }
-        .btn-small { padding:8px 14px; font-size:13px; min-height:36px; border-radius:8px; }
+        .btn-small { padding:8px 14px; font-size:12px; min-height:36px; border-radius:8px; }
         .btn-icon { width:36px; height:36px; min-height:36px; padding:0; border-radius:50%; font-size:18px; }
         
-        .sync-status {
-            display:flex; align-items:center; justify-content:center;
-            gap:8px; padding:8px; background:#f0f0f5; border-radius:10px;
-            margin-bottom:15px; font-size:13px;
-        }
-        .sync-dot { width:10px; height:10px; border-radius:50%; background:#4caf50; }
-        .sync-dot.offline { background:#ff6b6b; }
-        
-        .setup-box {
-            background:#fff3cd; padding:15px; border-radius:10px;
-            margin:15px 0; text-align:center;
-        }
-        .setup-box input { width:100%; margin:10px 0; }
-        
         .task-list-box { background:#f8f9fa; border-radius:12px; padding:15px; margin:15px 0; }
+        .task-list-box h3 { font-size:16px; margin-bottom:12px; color:#333; }
         .task-list { list-style:none; max-height:50vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
         .task-item {
-            background:white; padding:14px; margin-bottom:8px; border-radius:10px;
+            background:white; padding:12px; margin-bottom:8px; border-radius:10px;
             border-left:4px solid #667eea; display:flex; flex-wrap:wrap;
             gap:8px; align-items:center; justify-content:space-between;
+            transition:all 0.3s;
         }
         .task-item.disabled { border-left-color:#ccc; opacity:0.5; }
+        .task-item.done { border-left-color:#4caf50; background:#f0fff0; }
         .task-info { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
-        .task-num { background:#667eea; color:white; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; }
+        .task-num { background:#667eea; color:white; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
         .task-name { font-size:15px; color:#333; word-break:break-word; }
+        .task-name.done-text { text-decoration:line-through; color:#999; }
         .task-tags { display:flex; gap:4px; flex-wrap:wrap; width:100%; }
         .tag { padding:3px 8px; border-radius:8px; font-size:11px; font-weight:600; }
         .tag-freq { background:#e3f2fd; color:#1976d2; }
         .tag-ok { background:#c8e6c9; color:#2e7d32; }
         .tag-no { background:#ffcdd2; color:#c62828; }
         .tag-date { background:#f5f5f5; color:#666; }
+        .tag-done { background:#c8e6c9; color:#2e7d32; }
+        
+        /* Checkbox style */
+        .checkbox-wrapper {
+            display:flex; align-items:center; gap:8px; cursor:pointer;
+            padding:8px; border-radius:8px; transition:all 0.2s;
+        }
+        .checkbox-wrapper:active { background:#f0f0f0; }
+        .custom-checkbox {
+            width:28px; height:28px; border:3px solid #ccc; border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-size:18px; color:white; transition:all 0.2s;
+            flex-shrink:0; background:white;
+        }
+        .custom-checkbox.checked {
+            background:#4caf50; border-color:#4caf50; color:white;
+        }
         
         .msg { padding:10px 14px; border-radius:10px; font-size:13px; text-align:center; margin:10px 0; display:none; }
         .msg.show { display:block; }
         .msg-error { background:#ffebee; color:#c62828; }
         .msg-success { background:#e8f5e9; color:#2e7d32; }
         
-        .result-box { background:linear-gradient(135deg,#f5f7fa,#c3cfe2); border-radius:12px; padding:15px; margin-top:15px; display:none; }
-        .result-box.show { display:block; }
-        .result-item { background:white; padding:12px 14px; margin-bottom:6px; border-radius:8px; display:flex; align-items:center; gap:10px; font-size:14px; }
+        .result-box { background:linear-gradient(135deg,#f5f7fa,#c3cfe2); border-radius:12px; padding:15px; margin-top:15px; }
+        .result-box h3 { text-align:center; margin-bottom:12px; }
+        .result-item {
+            background:white; padding:12px 14px; margin-bottom:6px; border-radius:8px;
+            display:flex; align-items:center; gap:10px; font-size:14px;
+            transition:all 0.3s;
+        }
+        .result-item.done { background:#e8f5e9; opacity:0.7; }
+        .result-item .task-name.done-text { text-decoration:line-through; color:#999; }
         .priority-tag { margin-left:auto; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; color:white; }
         .pri-high { background:#ff6b6b; }
         .pri-med { background:#ffd93d; color:#333; }
         .pri-low { background:#6bcf7f; }
+        
+        .progress-bar {
+            height:6px; background:#e0e0e0; border-radius:3px; margin:10px 0; overflow:hidden;
+        }
+        .progress-fill { height:100%; background:#4caf50; border-radius:3px; transition:width 0.3s; }
+        .progress-text { text-align:center; font-size:13px; color:#666; margin-bottom:10px; }
+        
+        .hist-item { background:white; padding:12px 14px; margin-bottom:8px; border-radius:8px; }
+        .hist-date { font-weight:600; color:#667eea; margin-bottom:4px; font-size:14px; }
+        .hist-tasks { font-size:13px; color:#333; }
         
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             .container { padding-bottom: calc(30px + env(safe-area-inset-bottom)); }
@@ -122,35 +142,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📋 Công Việc Đồng Bộ</h1>
+            <h1>📋 Công Việc Ngẫu Nhiên</h1>
             <div class="time-display" id="timeDisplay">--:--</div>
             <div class="date-display" id="dateDisplay">----</div>
-        </div>
-
-        <!-- Trạng thái đồng bộ -->
-        <div class="sync-status">
-            <span class="sync-dot" id="syncDot"></span>
-            <span id="syncText">Đang kiểm tra kết nối...</span>
-        </div>
-
-        <!-- Setup Google Sheet ID -->
-        <div class="setup-box" id="setupBox" style="display:none;">
-            <h4>⚙️ Kết nối Google Sheets</h4>
-            <p style="font-size:12px;color:#666;margin-bottom:10px;">
-                Nhập ID Google Sheet để đồng bộ dữ liệu
-            </p>
-            <input type="text" id="sheetIdInput" placeholder="ID Google Sheet">
-            <button class="btn btn-info btn-block" onclick="saveSheetId()">💾 Lưu & Đồng Bộ</button>
-            <button class="btn btn-warning btn-block" onclick="createNewSheet()">📊 Tạo Sheet Mới</button>
-            <p style="font-size:11px;color:#888;margin-top:8px;">
-                Cần tạo Google Sheet và bật quyền "Anyone with link can edit"
-            </p>
         </div>
 
         <div class="tabs">
             <button class="tab active" onclick="openTab('manage')">📝 Việc</button>
             <button class="tab" onclick="openTab('random')">🎲 Xáo</button>
-            <button class="tab" onclick="openTab('sync')">🔄 ĐB</button>
+            <button class="tab" onclick="openTab('history')">📅 Sử</button>
         </div>
 
         <!-- Tab Quản lý -->
@@ -187,17 +187,16 @@
 
             <div class="task-list-box">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <h3 style="font-size:16px;">📋 Danh sách</h3>
-                    <button class="btn btn-small btn-info" onclick="forceSync()">🔄 Đồng bộ</button>
+                    <h3>📋 Danh sách</h3>
+                    <button class="btn btn-small btn-info" onclick="exportData()">💾 Xuất</button>
                 </div>
                 <ul class="task-list" id="taskListEl"></ul>
                 <div style="text-align:center;color:#666;font-size:13px;margin-top:8px;" id="taskCountEl">Chưa có công việc</div>
             </div>
 
             <div class="input-group">
-                <button class="btn btn-small" style="background:#2196F3;" onclick="exportData()">💾 Xuất</button>
                 <button class="btn btn-small" style="background:#2196F3;" onclick="clickImport()">📥 Nhập</button>
-                <button class="btn btn-danger btn-small" onclick="clearAll()">🗑️ Xóa hết</button>
+                <button class="btn btn-small btn-danger" onclick="clearAll()">🗑️ Xóa hết</button>
             </div>
         </div>
 
@@ -205,150 +204,55 @@
         <div id="tab-random" class="tab-content">
             <div id="msgRandomError" class="msg msg-error"></div>
             <div id="msgRandomOk" class="msg msg-success"></div>
+            
             <div style="text-align:center;margin:15px 0;">
                 <button class="btn btn-primary" style="font-size:18px;padding:18px 30px;" onclick="doShuffle()">
                     🎲 Xáo Trộn Ngẫu Nhiên
                 </button>
-            </div>
-            <div class="result-box" id="resultBox">
-                <h3 style="text-align:center;margin-bottom:12px;">✨ Thứ Tự Hôm Nay</h3>
-                <ul class="result-list" id="resultList"></ul>
-                <div style="text-align:center;margin-top:15px;">
-                    <button class="btn btn-success" onclick="markDone()">✅ Đánh dấu đã làm</button>
+                <div style="color:#666;font-size:13px;margin-top:8px;">
+                    Chỉ xáo việc có sẵn hôm nay
                 </div>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">✨ Thứ Tự Hôm Nay</h3>
+                    <button class="btn btn-small btn-danger" onclick="resetShuffle()">🔄 Làm mới</button>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+                <div class="progress-text" id="progressText">Hoàn thành: 0/0</div>
+                <ul class="result-list" id="resultList"></ul>
             </div>
         </div>
 
-        <!-- Tab Đồng bộ -->
-        <div id="tab-sync" class="tab-content">
-            <h3 style="margin-bottom:15px;">🔄 Quản lý Đồng Bộ</h3>
-            <div id="syncInfo">
-                <p style="color:#666;text-align:center;">Chưa kết nối Google Sheets</p>
+        <!-- Tab Lịch sử -->
+        <div id="tab-history" class="tab-content">
+            <h3 style="margin-bottom:15px;">📅 Lịch sử thực hiện</h3>
+            <div id="historySection">
+                <div style="text-align:center;color:#888;">Chưa có lịch sử</div>
             </div>
-            <button class="btn btn-info btn-block" onclick="showSetup()">⚙️ Cài đặt Google Sheets</button>
-            <button class="btn btn-warning btn-block" onclick="forceSync()">🔄 Đồng bộ ngay</button>
-            <button class="btn btn-danger btn-block" onclick="resetSync()">🔌 Ngắt kết nối</button>
+            <button class="btn btn-small btn-danger" style="margin-top:10px;" onclick="clearHistory()">🗑️ Xóa lịch sử</button>
         </div>
 
         <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="handleImport(event)">
     </div>
 
     <script>
-        // ============ GOOGLE SHEETS SYNC ============
-        var SHEET_ID = localStorage.getItem('gg_sheet_id') || '';
-        var SYNC_URL = '';
-
-        function getSyncUrl() {
-            if (!SHEET_ID) return '';
-            return 'https://script.google.com/macros/s/AKfycbwAIQA4f4qP8J8xLqLqLqLqLqLqLqLqLqLq/exec?id=' + SHEET_ID;
-        }
-
-        // Lưu ID Sheet
-        function saveSheetId() {
-            var id = document.getElementById('sheetIdInput').value.trim();
-            if (!id) { alert('Nhập ID Sheet!'); return; }
-            
-            // Trích xuất ID từ URL nếu dán full URL
-            var match = id.match(/\/d\/([a-zA-Z0-9-_]+)/);
-            if (match) id = match[1];
-            
-            SHEET_ID = id;
-            localStorage.setItem('gg_sheet_id', SHEET_ID);
-            showMsg('msgManageOk', 'Đã lưu ID Sheet! Đang đồng bộ...');
-            document.getElementById('setupBox').style.display = 'none';
-            updateSyncStatus();
-            syncFromSheet();
-        }
-
-        function showSetup() {
-            document.getElementById('setupBox').style.display = 'block';
-            document.getElementById('sheetIdInput').value = SHEET_ID;
-            openTab('manage');
-        }
-
-        function createNewSheet() {
-            window.open('https://sheets.new', '_blank');
-            alert('1. Google Sheet mới đã mở\n2. Vào File → Share → "Anyone with link" → Editor\n3. Copy link và dán vào ô bên dưới\n4. Lưu ý: Cần cột A: Tên, B: Tần suất, C: Lần cuối');
-        }
-
-        function resetSync() {
-            if (confirm('Ngắt kết nối Google Sheets?')) {
-                SHEET_ID = '';
-                localStorage.removeItem('gg_sheet_id');
-                updateSyncStatus();
-                document.getElementById('syncInfo').innerHTML = '<p style="color:#666;text-align:center;">Chưa kết nối</p>';
-                showMsg('msgManageOk', 'Đã ngắt kết nối!');
-            }
-        }
-
-        function updateSyncStatus() {
-            var dot = document.getElementById('syncDot');
-            var text = document.getElementById('syncText');
-            if (SHEET_ID) {
-                dot.className = 'sync-dot';
-                text.textContent = 'Đã kết nối Google Sheets ✓';
-            } else {
-                dot.className = 'sync-dot offline';
-                text.textContent = 'Chưa kết nối - Lưu cục bộ';
-            }
-        }
-
-        // ============ Đồng bộ thực tế qua localStorage + Manual Export/Import ============
-        // Vì Google Sheets API cần backend, tôi dùng giải pháp hybrid:
-        // - Dữ liệu chính lưu trong localStorage (nhanh, offline)
-        // - Có nút Export/Import để đồng bộ thủ công qua file JSON
-        // - File JSON có thể upload lên Google Drive và share giữa các thiết bị
-
-        function forceSync() {
-            if (!SHEET_ID) {
-                showMsg('msgManageError', 'Chưa cài đặt Google Sheet ID! Vào tab ĐB để cài.');
-                return;
-            }
-            
-            // Thử sync với Google Sheets
-            try {
-                syncToSheet();
-            } catch(e) {
-                showMsg('msgManageError', 'Lỗi đồng bộ: ' + e.message);
-            }
-        }
-
-        function syncToSheet() {
-            // Tạo file JSON để download (cách đơn giản nhất để sync)
-            var data = {
-                tasks: tasks,
-                history: history,
-                lastSync: new Date().toISOString()
-            };
-            
-            var blob = new Blob([JSON.stringify(data)], {type:'application/json'});
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'sync-data-' + new Date().toISOString().split('T')[0] + '.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            showMsg('msgManageOk', 'Đã tạo file đồng bộ! Upload file này lên Google Sheets hoặc gửi qua điện thoại khác để Import.');
-        }
-
-        function syncFromSheet() {
-            // Tự động mở file picker để người dùng chọn file sync
-            document.getElementById('importFileInput').click();
-        }
-
-        // ============ DATA ============
+        // ============ DATA LAYERS ============
+        // 1. tasks: danh sách gốc (lưu localStorage)
+        // 2. todayTasks: danh sách đã xáo hôm nay (lưu localStorage)
+        // 3. completedTasks: danh sách ID đã hoàn thành hôm nay (lưu localStorage)
+        // 4. history: lịch sử các ngày
+        
         var tasks = [];
+        var todayTasks = []; // { id, name, frequency, order }
+        var completedToday = []; // [id1, id2, ...]
         var history = [];
-        var editTaskId = null;
-        var shuffledTasks = [];
 
         var freqMap = {
             'daily': 1, '2days': 2, '3days': 3,
             'weekly': 7, 'biweekly': 14, 'monthly': 30
         };
-
         var freqLabels = {
             'daily': 'Hàng ngày', '2days': '2 ngày', '3days': '3 ngày',
             'weekly': '1 tuần', 'biweekly': '2 tuần', 'monthly': '1 tháng'
@@ -364,18 +268,35 @@
             var d = now.getDate().toString().padStart(2, '0');
             var mo = (now.getMonth()+1).toString().padStart(2, '0');
             var y = now.getFullYear();
-            var wd = weekdays[now.getDay()];
             
             document.getElementById('timeDisplay').textContent = h + ':' + m + ':' + s;
-            document.getElementById('dateDisplay').textContent = wd + ', ' + d + '/' + mo + '/' + y;
+            document.getElementById('dateDisplay').textContent = weekdays[now.getDay()] + ', ' + d + '/' + mo + '/' + y;
         }
 
         // ============ STORAGE ============
         function loadAll() {
             var t = localStorage.getItem('taskmgr_tasks');
+            var tt = localStorage.getItem('taskmgr_todayTasks');
+            var ct = localStorage.getItem('taskmgr_completedToday');
+            var td = localStorage.getItem('taskmgr_todayDate');
             var h = localStorage.getItem('taskmgr_history');
+            
             if (t) { try { tasks = JSON.parse(t); } catch(e) { tasks = []; } }
             if (h) { try { history = JSON.parse(h); } catch(e) { history = []; } }
+            
+            // Kiểm tra xem todayTasks có phải của hôm nay không
+            var todayStr = new Date().toDateString();
+            if (td === todayStr && tt) {
+                try { todayTasks = JSON.parse(tt); } catch(e) { todayTasks = []; }
+                if (ct) { try { completedToday = JSON.parse(ct); } catch(e) { completedToday = []; } }
+            } else {
+                // Sang ngày mới -> reset
+                todayTasks = [];
+                completedToday = [];
+                localStorage.setItem('taskmgr_todayDate', todayStr);
+                localStorage.setItem('taskmgr_todayTasks', JSON.stringify(todayTasks));
+                localStorage.setItem('taskmgr_completedToday', JSON.stringify(completedToday));
+            }
         }
 
         function saveAll() {
@@ -383,8 +304,15 @@
             localStorage.setItem('taskmgr_history', JSON.stringify(history));
         }
 
+        function saveToday() {
+            var todayStr = new Date().toDateString();
+            localStorage.setItem('taskmgr_todayDate', todayStr);
+            localStorage.setItem('taskmgr_todayTasks', JSON.stringify(todayTasks));
+            localStorage.setItem('taskmgr_completedToday', JSON.stringify(completedToday));
+        }
+
         // ============ TASK LOGIC ============
-        function canDo(task) {
+        function canDoTask(task) {
             if (!task.lastDone) return true;
             var last = new Date(task.lastDone);
             var today = new Date();
@@ -394,7 +322,7 @@
             return days >= (freqMap[task.frequency] || 7);
         }
 
-        function nextDate(task) {
+        function nextDateStr(task) {
             if (!task.lastDone) return 'Có thể làm';
             var last = new Date(task.lastDone);
             var days = freqMap[task.frequency] || 7;
@@ -483,43 +411,186 @@
             showMsg('msgManageOk', 'Thêm ' + added + ' việc!');
         }
 
+        // ============ SHUFFLE & TODAY MANAGEMENT ============
         function doShuffle() {
-            var available = tasks.filter(function(t) { return canDo(t); });
-            if (available.length === 0) { showMsg('msgRandomError', 'Không có việc!'); return; }
+            var available = tasks.filter(function(t) { return canDoTask(t); });
+            if (available.length === 0) { showMsg('msgRandomError', 'Không có việc nào!'); return; }
             if (available.length < 2) { showMsg('msgRandomError', 'Cần ít nhất 2 việc!'); return; }
             
-            shuffledTasks = available.slice();
-            for (var i = shuffledTasks.length-1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i+1));
-                var temp = shuffledTasks[i];
-                shuffledTasks[i] = shuffledTasks[j];
-                shuffledTasks[j] = temp;
+            // Tạo danh sách xáo trộn
+            var shuffled = available.slice();
+            for (var i = shuffled.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = shuffled[i];
+                shuffled[i] = shuffled[j];
+                shuffled[j] = temp;
             }
-            renderShuffled(shuffledTasks);
-            showMsg('msgRandomOk', 'Xáo ' + shuffledTasks.length + ' việc!');
-        }
-
-        function markDone() {
-            if (shuffledTasks.length === 0) { showMsg('msgRandomError', 'Xáo trước!'); return; }
-            var today = new Date().toISOString();
-            shuffledTasks.forEach(function(st) {
-                var idx = tasks.findIndex(function(t) { return t.id === st.id; });
-                if (idx !== -1) tasks[idx].lastDone = today;
+            
+            // Lưu vào todayTasks
+            todayTasks = shuffled.map(function(t, idx) {
+                return { id: t.id, name: t.name, frequency: t.frequency, order: idx };
             });
-            history.unshift({ date: today, tasks: shuffledTasks.map(function(t) { return t.name; }) });
-            if (history.length > 50) history = history.slice(0, 50);
-            saveAll(); renderTasks();
-            document.getElementById('resultBox').classList.remove('show');
-            shuffledTasks = [];
-            showMsg('msgRandomOk', 'Hoàn thành!');
+            completedToday = [];
+            saveToday();
+            
+            renderTodayTasks();
+            showMsg('msgRandomOk', 'Đã xáo ' + todayTasks.length + ' việc! Lưu đến hết ngày.');
         }
 
-        // ============ EDIT/DELETE ============
-        function startEdit(id) {
+        function resetShuffle() {
+            if (confirm('Tạo danh sách xáo trộn mới? Các việc đã tick sẽ mất.')) {
+                doShuffle();
+            }
+        }
+
+        function toggleComplete(taskId) {
+            var idx = completedToday.indexOf(taskId);
+            if (idx === -1) {
+                // Chưa hoàn thành -> thêm vào
+                completedToday.push(taskId);
+            } else {
+                // Đã hoàn thành -> bỏ tick
+                completedToday.splice(idx, 1);
+            }
+            saveToday();
+            renderTodayTasks();
+            
+            // Kiểm tra nếu tất cả đã hoàn thành
+            if (completedToday.length === todayTasks.length && todayTasks.length > 0) {
+                showMsg('msgRandomOk', '🎉 Hoàn thành tất cả công việc!');
+            }
+        }
+
+        function saveCompletedToHistory() {
+            // Lưu các việc đã hoàn thành vào tasks gốc và history
+            var doneNames = [];
+            var today = new Date().toISOString();
+            
+            completedToday.forEach(function(taskId) {
+                var task = tasks.find(function(t) { return t.id === taskId; });
+                if (task) {
+                    task.lastDone = today;
+                    doneNames.push(task.name);
+                }
+            });
+            
+            if (doneNames.length > 0) {
+                history.unshift({ date: today, tasks: doneNames });
+                if (history.length > 50) history = history.slice(0, 50);
+                saveAll();
+                renderTasks();
+                renderHistory();
+            }
+        }
+
+        // ============ RENDER ============
+        function renderTasks() {
+            var el = document.getElementById('taskListEl');
+            var countEl = document.getElementById('taskCountEl');
+            
+            if (tasks.length === 0) {
+                el.innerHTML = '';
+                countEl.textContent = 'Chưa có công việc';
+                return;
+            }
+            
+            el.innerHTML = tasks.map(function(t, i) {
+                var ok = canDoTask(t);
+                var lastStr = t.lastDone ? new Date(t.lastDone).toLocaleDateString('vi-VN') : 'Chưa làm';
+                var nextStr = !ok ? ' | Mở: ' + nextDateStr(t) : '';
+                
+                return '<li class="task-item' + (!ok ? ' disabled' : '') + '">' +
+                    '<div class="task-info">' +
+                        '<span class="task-num">' + (i+1) + '</span>' +
+                        '<span class="task-name">' + t.name + '</span>' +
+                    '</div>' +
+                    '<div class="task-tags">' +
+                        '<span class="tag tag-freq">' + (freqLabels[t.frequency]||t.frequency) + '</span>' +
+                        '<span class="tag ' + (ok ? 'tag-ok' : 'tag-no') + '">' + (ok ? '✓' : '✗') + '</span>' +
+                        '<span class="tag tag-date">' + lastStr + nextStr + '</span>' +
+                    '</div>' +
+                    '<div>' +
+                        '<button class="btn btn-icon" style="background:#4caf50;" onclick="editTask(' + t.id + ')">✎</button>' +
+                        '<button class="btn btn-icon" style="background:#ff6b6b;margin-left:4px;" onclick="deleteTask(' + t.id + ')">×</button>' +
+                    '</div>' +
+                '</li>';
+            }).join('');
+            
+            var avail = tasks.filter(function(t) { return canDoTask(t); }).length;
+            countEl.textContent = 'Tổng: ' + tasks.length + ' | Sẵn sàng: ' + avail;
+        }
+
+        function renderTodayTasks() {
+            var box = document.getElementById('resultBox');
+            var list = document.getElementById('resultList');
+            var fill = document.getElementById('progressFill');
+            var text = document.getElementById('progressText');
+            
+            if (todayTasks.length === 0) {
+                list.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">Chưa có danh sách xáo trộn.<br>Nhấn nút Xáo Trộn để tạo!</div>';
+                fill.style.width = '0%';
+                text.textContent = 'Hoàn thành: 0/0';
+                box.style.display = 'block';
+                return;
+            }
+            
+            box.style.display = 'block';
+            
+            var doneCount = completedToday.length;
+            var total = todayTasks.length;
+            var percent = Math.round((doneCount / total) * 100);
+            
+            fill.style.width = percent + '%';
+            text.textContent = 'Hoàn thành: ' + doneCount + '/' + total + ' (' + percent + '%)';
+            
+            list.innerHTML = todayTasks.map(function(t, i) {
+                var isDone = completedToday.indexOf(t.id) !== -1;
+                var pri = i < Math.ceil(total * 0.3) ? 'Cao' : (i < Math.ceil(total * 0.6) ? 'Vừa' : 'Thấp');
+                var priCls = i < Math.ceil(total * 0.3) ? 'pri-high' : (i < Math.ceil(total * 0.6) ? 'pri-med' : 'pri-low');
+                
+                return '<li class="result-item' + (isDone ? ' done' : '') + '">' +
+                    '<div class="checkbox-wrapper" onclick="toggleComplete(' + t.id + ')">' +
+                        '<div class="custom-checkbox' + (isDone ? ' checked' : '') + '">' +
+                            (isDone ? '✓' : '') +
+                        '</div>' +
+                    '</div>' +
+                    '<span class="task-num">' + (i+1) + '</span>' +
+                    '<span class="task-name' + (isDone ? ' done-text' : '') + '">' + t.name + '</span>' +
+                    '<span class="priority-tag ' + priCls + '">' + pri + '</span>' +
+                '</li>';
+            }).join('');
+            
+            // Tự động lưu vào history khi tất cả hoàn thành
+            if (doneCount === total && total > 0) {
+                // Chỉ lưu 1 lần
+                var allDoneKey = 'taskmgr_allDone_' + new Date().toDateString();
+                if (!localStorage.getItem(allDoneKey)) {
+                    saveCompletedToHistory();
+                    localStorage.setItem(allDoneKey, '1');
+                }
+            }
+        }
+
+        function renderHistory() {
+            var el = document.getElementById('historySection');
+            if (history.length === 0) {
+                el.innerHTML = '<div style="text-align:center;color:#888;">Chưa có lịch sử</div>';
+                return;
+            }
+            el.innerHTML = history.map(function(h) {
+                var d = new Date(h.date);
+                var dateStr = d.toLocaleDateString('vi-VN', {weekday:'long', day:'2-digit', month:'2-digit', year:'numeric'});
+                return '<div class="hist-item">' +
+                    '<div class="hist-date">📅 ' + dateStr + '</div>' +
+                    '<div class="hist-tasks">' + h.tasks.join(' → ') + '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        // ============ EDIT / DELETE ============
+        function editTask(id) {
             var task = tasks.find(function(t) { return t.id === id; });
             if (!task) return;
-            editTaskId = id;
-            // Đơn giản hóa: dùng prompt thay modal
             var newName = prompt('Tên công việc:', task.name);
             if (newName && newName.trim()) {
                 var newFreq = prompt('Tần suất (daily/2days/3days/weekly/biweekly/monthly):', task.frequency);
@@ -535,10 +606,14 @@
             }
         }
 
-        function deleteOne(id) {
-            if (confirm('Xóa?')) {
+        function deleteTask(id) {
+            if (confirm('Xóa công việc này?')) {
                 tasks = tasks.filter(function(t) { return t.id !== id; });
-                saveAll(); renderTasks();
+                // Cũng xóa khỏi todayTasks nếu có
+                todayTasks = todayTasks.filter(function(t) { return t.id !== id; });
+                completedToday = completedToday.filter(function(tid) { return tid !== id; });
+                saveAll(); saveToday();
+                renderTasks(); renderTodayTasks();
                 showMsg('msgManageOk', 'Đã xóa!');
             }
         }
@@ -546,23 +621,35 @@
         function clearAll() {
             if (tasks.length === 0) return;
             if (confirm('Xóa tất cả ' + tasks.length + ' việc?')) {
-                tasks = []; saveAll(); renderTasks();
-                showMsg('msgManageOk', 'Đã xóa!');
+                tasks = []; todayTasks = []; completedToday = [];
+                saveAll(); saveToday();
+                renderTasks(); renderTodayTasks();
+                showMsg('msgManageOk', 'Đã xóa hết!');
             }
         }
 
-        // ============ IMPORT/EXPORT ============
+        function clearHistory() {
+            if (history.length === 0) return;
+            if (confirm('Xóa lịch sử?')) { history = []; saveAll(); renderHistory(); }
+        }
+
+        // ============ IMPORT / EXPORT ============
         function exportData() {
-            if (tasks.length === 0) { showMsg('msgManageError', 'Không có việc!'); return; }
-            var data = { tasks: tasks, history: history, exportDate: new Date().toISOString() };
+            var data = {
+                tasks: tasks,
+                todayTasks: todayTasks,
+                completedToday: completedToday,
+                history: history,
+                exportDate: new Date().toISOString()
+            };
             var blob = new Blob([JSON.stringify(data)], {type:'application/json'});
             var a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'tasks-sync-' + new Date().toISOString().split('T')[0] + '.json';
+            a.download = 'tasks-' + new Date().toISOString().split('T')[0] + '.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            showMsg('msgManageOk', 'Đã xuất file! Gửi file này để đồng bộ.');
+            showMsg('msgManageOk', 'Đã xuất!');
         }
 
         function clickImport() {
@@ -576,56 +663,19 @@
             reader.onload = function(ev) {
                 try {
                     var data = JSON.parse(ev.target.result);
-                    if (data.tasks) {
-                        if (confirm('Nhập ' + data.tasks.length + ' việc? Sẽ ghi đè dữ liệu hiện tại.')) {
-                            tasks = data.tasks;
-                            history = data.history || [];
-                            saveAll(); renderTasks();
-                            showMsg('msgManageOk', 'Đã nhập và đồng bộ!');
-                        }
+                    if (data.tasks && confirm('Nhập dữ liệu? Sẽ ghi đè.')) {
+                        tasks = data.tasks;
+                        todayTasks = data.todayTasks || [];
+                        completedToday = data.completedToday || [];
+                        history = data.history || [];
+                        saveAll(); saveToday();
+                        renderTasks(); renderTodayTasks(); renderHistory();
+                        showMsg('msgManageOk', 'Đã nhập!');
                     }
                 } catch(err) { showMsg('msgManageError', 'File lỗi!'); }
             };
             reader.readAsText(file);
             e.target.value = '';
-        }
-
-        // ============ RENDER ============
-        function renderTasks() {
-            var el = document.getElementById('taskListEl');
-            var countEl = document.getElementById('taskCountEl');
-            if (tasks.length === 0) {
-                el.innerHTML = ''; countEl.textContent = 'Chưa có công việc'; return;
-            }
-            el.innerHTML = tasks.map(function(t, i) {
-                var ok = canDo(t);
-                var lastStr = t.lastDone ? 'Làm: ' + new Date(t.lastDone).toLocaleDateString('vi-VN') : 'Chưa làm';
-                var nextStr = !ok ? ' | Mở: ' + nextDate(t) : '';
-                return '<li class="task-item' + (!ok ? ' disabled' : '') + '">' +
-                    '<div class="task-info"><span class="task-num">' + (i+1) + '</span><span class="task-name">' + t.name + '</span></div>' +
-                    '<div class="task-tags">' +
-                        '<span class="tag tag-freq">' + (freqLabels[t.frequency]||t.frequency) + '</span>' +
-                        '<span class="tag ' + (ok ? 'tag-ok' : 'tag-no') + '">' + (ok ? '✓' : '✗') + '</span>' +
-                        '<span class="tag tag-date">' + lastStr + nextStr + '</span>' +
-                    '</div>' +
-                    '<div><button class="btn btn-icon" style="background:#4caf50;" onclick="startEdit(' + t.id + ')">✎</button>' +
-                    '<button class="btn btn-icon" style="background:#ff6b6b;margin-left:4px;" onclick="deleteOne(' + t.id + ')">×</button></div>' +
-                '</li>';
-            }).join('');
-            var avail = tasks.filter(function(t) { return canDo(t); }).length;
-            countEl.textContent = 'Tổng: ' + tasks.length + ' | Sẵn sàng: ' + avail;
-        }
-
-        function renderShuffled(arr) {
-            var box = document.getElementById('resultBox');
-            var list = document.getElementById('resultList');
-            list.innerHTML = arr.map(function(t, i) {
-                var pri = i < Math.ceil(arr.length*0.3) ? 'Cao' : (i < Math.ceil(arr.length*0.6) ? 'Vừa' : 'Thấp');
-                var cls = i < Math.ceil(arr.length*0.3) ? 'pri-high' : (i < Math.ceil(arr.length*0.6) ? 'pri-med' : 'pri-low');
-                return '<li class="result-item"><span class="task-num">' + (i+1) + '</span><span>' + t.name + '</span><span class="priority-tag ' + cls + '">' + pri + '</span></li>';
-            }).join('');
-            box.classList.add('show');
-            box.scrollIntoView({behavior:'smooth'});
         }
 
         // ============ UI ============
@@ -634,9 +684,12 @@
             var contents = document.querySelectorAll('.tab-content');
             tabs.forEach(function(t) { t.classList.remove('active'); });
             contents.forEach(function(c) { c.classList.remove('active'); });
-            var idx = {manage:0, random:1, sync:2}[name];
+            var idx = {manage:0, random:1, history:2}[name];
             tabs[idx].classList.add('active');
             document.getElementById('tab-' + name).classList.add('active');
+            
+            if (name === 'random') renderTodayTasks();
+            if (name === 'history') renderHistory();
         }
 
         function showMsg(id, msg) {
@@ -650,13 +703,24 @@
         // ============ INIT ============
         loadAll();
         renderTasks();
+        renderTodayTasks();
         updateClock();
         setInterval(updateClock, 1000);
-        updateSyncStatus();
 
         document.getElementById('taskNameInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') { e.preventDefault(); addOneTask(); }
         });
+
+        // Tự động lưu completed tasks vào history khi tất cả hoàn thành
+        setInterval(function() {
+            if (todayTasks.length > 0 && completedToday.length === todayTasks.length) {
+                var allDoneKey = 'taskmgr_allDone_' + new Date().toDateString();
+                if (!localStorage.getItem(allDoneKey)) {
+                    saveCompletedToHistory();
+                    localStorage.setItem(allDoneKey, '1');
+                }
+            }
+        }, 5000);
     </script>
 </body>
 </html>
